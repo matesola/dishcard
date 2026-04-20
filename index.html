@@ -13,17 +13,6 @@ html, body {
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  cursor:none;
-}
-.cursor {
-  position:fixed;
-  width:10px; height:10px;
-  background:rgba(255,255,255,0.9);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9999;
-  transform:translate(-50%,-50%);
-  mix-blend-mode:difference;
 }
 .scene { perspective:1200px; }
 .card-wrapper {
@@ -31,7 +20,6 @@ html, body {
   transform-style:preserve-3d;
   will-change:transform;
 }
-/* Aspect ratio 1185:1661 — height drives width */
 .card {
   position:relative;
   height:min(88vh, 560px);
@@ -44,105 +32,59 @@ html, body {
     0 0 50px rgba(180,150,80,0.12);
 }
 .card img {
-  position:absolute;
-  inset:0;
+  position:absolute; inset:0;
   width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-  z-index:1;
-  pointer-events:none;
+  object-fit:cover; display:block;
+  z-index:1; pointer-events:none;
 }
 .noise {
-  position:absolute; inset:0; z-index:2;
-  opacity:0.04;
+  position:absolute; inset:0; z-index:2; opacity:0.04;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:180px;
-  mix-blend-mode:overlay;
-  pointer-events:none;
+  background-size:180px; mix-blend-mode:overlay; pointer-events:none;
 }
 .holo1 {
   position:absolute; inset:0; z-index:3;
-  pointer-events:none; opacity:0;
-  mix-blend-mode:color-dodge;
-  background:linear-gradient(
-    var(--ha, 135deg),
-    transparent 0%,
-    rgba(255,0,100,0.18) 12%, rgba(255,165,0,0.22) 24%,
+  pointer-events:none; opacity:0; mix-blend-mode:color-dodge;
+  background:linear-gradient(var(--ha,135deg),
+    transparent 0%, rgba(255,0,100,0.18) 12%, rgba(255,165,0,0.22) 24%,
     rgba(255,255,0,0.18) 36%, rgba(0,255,120,0.22) 48%,
     rgba(0,200,255,0.22) 60%, rgba(100,0,255,0.18) 72%,
-    rgba(255,0,200,0.22) 84%, transparent 100%
-  );
+    rgba(255,0,200,0.22) 84%, transparent 100%);
 }
 .holo2 {
   position:absolute; inset:0; z-index:4;
-  pointer-events:none; opacity:0;
-  mix-blend-mode:screen;
-  background:radial-gradient(
-    ellipse 60% 40% at var(--mx,50%) var(--my,50%),
+  pointer-events:none; opacity:0; mix-blend-mode:screen;
+  background:radial-gradient(ellipse 60% 40% at var(--mx,50%) var(--my,50%),
     rgba(255,220,80,0.4) 0%, rgba(200,100,255,0.25) 35%,
-    rgba(0,200,255,0.18) 65%, transparent 80%
-  );
+    rgba(0,200,255,0.18) 65%, transparent 80%);
 }
 .spec {
   position:absolute; inset:0; z-index:5;
-  pointer-events:none; opacity:0;
-  mix-blend-mode:soft-light;
-  background:radial-gradient(
-    circle 160px at var(--mx,50%) var(--my,50%),
-    rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 70%
-  );
+  pointer-events:none; opacity:0; mix-blend-mode:soft-light;
+  background:radial-gradient(circle 160px at var(--mx,50%) var(--my,50%),
+    rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 70%);
 }
 .edge {
   position:absolute; inset:0; z-index:6;
   border-radius:20px; pointer-events:none; opacity:0;
-  background:linear-gradient(
-    var(--ea, 0deg),
+  background:linear-gradient(var(--ea,0deg),
     transparent 42%, rgba(255,255,255,0.06) 49%,
-    rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.06) 51%, transparent 58%
-  );
+    rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.06) 51%, transparent 58%);
 }
 .foil {
   position:absolute; inset:0; z-index:7;
-  pointer-events:none; opacity:0;
-  mix-blend-mode:overlay;
+  pointer-events:none; opacity:0; mix-blend-mode:overlay;
 }
 .glow {
-  position:absolute; inset:-50px;
-  border-radius:70px; pointer-events:none; z-index:-1;
-  filter:blur(24px); opacity:0; transition:opacity 0.5s;
-  background:radial-gradient(
-    ellipse at var(--mx,50%) var(--my,50%),
-    rgba(var(--gr,180),var(--gg,150),var(--gb,80),0.32) 0%, transparent 65%
-  );
-}
-.controls {
-  position:fixed; bottom:20px; left:50%;
-  transform:translateX(-50%);
-  display:flex; gap:18px; z-index:100;
-}
-.ctrl { display:flex; flex-direction:column; align-items:center; gap:4px; }
-.ctrl label {
-  color:rgba(255,255,255,0.38); font-size:9px;
-  letter-spacing:0.12em; text-transform:uppercase; font-family:system-ui,sans-serif;
-}
-input[type=range] {
-  -webkit-appearance:none; width:82px; height:2px;
-  background:rgba(255,255,255,0.15); border-radius:2px; outline:none;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance:none; width:11px; height:11px;
-  border-radius:50%; background:rgba(220,185,90,0.95); cursor:pointer;
-}
-.info {
-  position:fixed; top:20px; left:50%; transform:translateX(-50%);
-  color:rgba(255,255,255,0.28); font-size:10px; letter-spacing:0.14em;
-  text-transform:uppercase; font-family:system-ui,sans-serif; white-space:nowrap;
+  position:absolute; inset:-50px; border-radius:70px;
+  pointer-events:none; z-index:-1; filter:blur(24px);
+  opacity:0; transition:opacity 0.5s;
+  background:radial-gradient(ellipse at var(--mx,50%) var(--my,50%),
+    rgba(var(--gr,180),var(--gg,150),var(--gb,80),0.32) 0%, transparent 65%);
 }
 </style>
 </head>
 <body>
-<div class="cursor" id="cur"></div>
-<div class="info">Najeď myší na kartu</div>
 <div class="scene">
   <div class="card-wrapper" id="wrap">
     <div class="glow" id="glow"></div>
@@ -157,20 +99,11 @@ input[type=range]::-webkit-slider-thumb {
     </div>
   </div>
 </div>
-<div class="controls">
-  <div class="ctrl"><label>Intenzita</label><input type="range" id="sInt"  min="0" max="100" value="75"></div>
-  <div class="ctrl"><label>Hologram</label><input type="range" id="sHolo" min="0" max="100" value="65"></div>
-  <div class="ctrl"><label>Záře</label>    <input type="range" id="sGlow" min="0" max="100" value="55"></div>
-  <div class="ctrl"><label>Tilt</label>    <input type="range" id="sTilt" min="0" max="100" value="55"></div>
-</div>
 <script>
-const wrap=document.getElementById('wrap'), card=document.getElementById('card');
-const h1=document.getElementById('h1'), h2=document.getElementById('h2');
-const sp=document.getElementById('sp'), eg=document.getElementById('eg');
-const glow=document.getElementById('glow'), fc=document.getElementById('fc');
-const cur=document.getElementById('cur');
-const sInt=document.getElementById('sInt'), sHolo=document.getElementById('sHolo');
-const sGlow=document.getElementById('sGlow'), sTilt=document.getElementById('sTilt');
+const wrap=document.getElementById('wrap'),card=document.getElementById('card');
+const h1=document.getElementById('h1'),h2=document.getElementById('h2');
+const sp=document.getElementById('sp'),eg=document.getElementById('eg');
+const glow=document.getElementById('glow'),fc=document.getElementById('fc');
 
 let mx=0,my=0,rect=null,over=false,tx=0,ty=0,idleT=0;
 
@@ -179,20 +112,20 @@ setupCanvas();
 window.addEventListener('resize',()=>{ setupCanvas(); rect=wrap.getBoundingClientRect(); });
 
 function drawFoil(px,py,intens){
-  const ctx=fc.getContext('2d'), w=fc.width, h=fc.height;
+  const ctx=fc.getContext('2d'),w=fc.width,h=fc.height;
   ctx.clearRect(0,0,w,h);
   const hue=(px*320+py*160)%360;
   const g1=ctx.createLinearGradient(px*w-w*0.4,0,px*w+w*0.4,0);
   g1.addColorStop(0,`hsla(${hue},100%,70%,0)`);
-  g1.addColorStop(0.2,`hsla(${hue+50},100%,78%,${0.45*intens})`);
-  g1.addColorStop(0.4,`hsla(${hue+110},100%,72%,${0.55*intens})`);
-  g1.addColorStop(0.6,`hsla(${hue+190},100%,80%,${0.50*intens})`);
-  g1.addColorStop(0.8,`hsla(${hue+270},100%,72%,${0.45*intens})`);
+  g1.addColorStop(0.2,`hsla(${hue+50},100%,78%,0.45)`);
+  g1.addColorStop(0.4,`hsla(${hue+110},100%,72%,0.55)`);
+  g1.addColorStop(0.6,`hsla(${hue+190},100%,80%,0.50)`);
+  g1.addColorStop(0.8,`hsla(${hue+270},100%,72%,0.45)`);
   g1.addColorStop(1,`hsla(${hue+360},100%,70%,0)`);
   ctx.fillStyle=g1;
   ctx.fillRect(0,h*0.13,w,h*0.17);
   const g2=ctx.createRadialGradient(px*w,py*h,0,px*w,py*h,w*0.6);
-  g2.addColorStop(0,`hsla(${hue+80},70%,75%,${0.07*intens})`);
+  g2.addColorStop(0,`hsla(${hue+80},70%,75%,0.07)`);
   g2.addColorStop(1,'transparent');
   ctx.fillStyle=g2;
   ctx.fillRect(0,0,w,h);
@@ -201,9 +134,7 @@ function drawFoil(px,py,intens){
 function lerp(a,b,t){ return a+(b-a)*t; }
 
 function tick(){
-  const intens=sInt.value/100, holoI=sHolo.value/100;
-  const glowI=sGlow.value/100, maxTilt=(sTilt.value/100)*22;
-
+  const maxTilt=22;
   if(over&&rect){
     const px=Math.max(0,Math.min(1,(mx-rect.left)/rect.width));
     const py=Math.max(0,Math.min(1,(my-rect.top)/rect.height));
@@ -211,25 +142,18 @@ function tick(){
     ty=lerp(ty,(px-0.5)*maxTilt,0.1);
     const angle=Math.atan2(py-0.5,px-0.5)*(180/Math.PI);
     h1.style.setProperty('--ha',(angle+90)+'deg');
-    h1.style.opacity=holoI*intens;
-    h2.style.opacity=holoI*intens*0.8;
-    sp.style.opacity=intens;
-    eg.style.opacity=Math.min(1,(Math.abs(tx)+Math.abs(ty))/maxTilt*0.7*intens);
-    glow.style.opacity=glowI;
-    fc.style.opacity=holoI*intens;
-    h2.style.setProperty('--mx',(px*100)+'%');
-    h2.style.setProperty('--my',(py*100)+'%');
-    sp.style.setProperty('--mx',(px*100)+'%');
-    sp.style.setProperty('--my',(py*100)+'%');
+    h1.style.opacity=0.65; h2.style.opacity=0.52;
+    sp.style.opacity=0.75; fc.style.opacity=0.65;
+    eg.style.opacity=Math.min(1,(Math.abs(tx)+Math.abs(ty))/maxTilt*0.7);
+    glow.style.opacity=0.55;
+    h2.style.setProperty('--mx',(px*100)+'%'); h2.style.setProperty('--my',(py*100)+'%');
+    sp.style.setProperty('--mx',(px*100)+'%'); sp.style.setProperty('--my',(py*100)+'%');
     eg.style.setProperty('--ea',(ty*3+tx*2)+'deg');
     const r=Math.round(170+px*70),g=Math.round(135+py*50),b=Math.round(55+(1-px)*90);
-    glow.style.setProperty('--gr',r);
-    glow.style.setProperty('--gg',g);
-    glow.style.setProperty('--gb',b);
-    glow.style.setProperty('--mx',(px*100)+'%');
-    glow.style.setProperty('--my',(py*100)+'%');
-    drawFoil(px,py,intens*holoI);
-    card.style.boxShadow=`0 0 0 1px rgba(255,255,255,0.1),0 ${28+tx*1.5}px 75px rgba(0,0,0,0.85),0 0 55px rgba(${r},${g},${b},${0.4*glowI}),0 0 110px rgba(${r},${g},${b},${0.18*glowI})`;
+    glow.style.setProperty('--gr',r); glow.style.setProperty('--gg',g); glow.style.setProperty('--gb',b);
+    glow.style.setProperty('--mx',(px*100)+'%'); glow.style.setProperty('--my',(py*100)+'%');
+    drawFoil(px,py,0.65);
+    card.style.boxShadow=`0 0 0 1px rgba(255,255,255,0.1),0 ${28+tx*1.5}px 75px rgba(0,0,0,0.85),0 0 55px rgba(${r},${g},${b},0.4),0 0 110px rgba(${r},${g},${b},0.18)`;
     wrap.style.transform=`rotateX(${tx}deg) rotateY(${ty}deg)`;
   } else {
     tx=lerp(tx,0,0.08); ty=lerp(ty,0,0.08);
@@ -243,7 +167,7 @@ function tick(){
   requestAnimationFrame(tick);
 }
 
-document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; });
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; });
 wrap.addEventListener('mouseenter',()=>{ rect=wrap.getBoundingClientRect(); over=true; });
 wrap.addEventListener('mouseleave',()=>{ over=false; });
 tick();
